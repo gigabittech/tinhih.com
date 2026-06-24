@@ -145,5 +145,5 @@ server/tinhih-auth-2025-08-12-747d9f66a146.json
 
 .replit 
 *.md
-.dockerignore
+.npm-cache/
 .do 
