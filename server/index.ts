@@ -64,7 +64,8 @@ app.get("/health", (req, res) => {
 
     if (process.env.NODE_ENV === "development") {
       // Only import vite in dev
-      const { setupVite } = await import("./vite.js");
+      const viteDevServerModule = "./vite.js";
+      const { setupVite } = await import(viteDevServerModule);
       await setupVite(app, server);
       console.log("🔧 Vite development server integrated");
     } else {
