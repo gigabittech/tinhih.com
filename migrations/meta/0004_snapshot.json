@@ -1,0 +1,141 @@
+{
+  "version": "7",
+  "dialect": "postgresql",
+  "tables": {
+    "donations": {
+      "name": "donations",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "uuid",
+          "primaryKey": true,
+          "hasDefault": true,
+          "isNullable": false
+        },
+        "amount": {
+          "name": "amount",
+          "type": "decimal(10,2)",
+          "primaryKey": false,
+          "hasDefault": false,
+          "isNullable": false
+        },
+        "currency": {
+          "name": "currency",
+          "type": "text",
+          "primaryKey": false,
+          "hasDefault": true,
+          "isNullable": false
+        },
+        "email": {
+          "name": "email",
+          "type": "text",
+          "primaryKey": false,
+          "hasDefault": false,
+          "isNullable": false
+        },
+        "firstName": {
+          "name": "first_name",
+          "type": "text",
+          "primaryKey": false,
+          "hasDefault": false,
+          "isNullable": true
+        },
+        "lastName": {
+          "name": "last_name",
+          "type": "text",
+          "primaryKey": false,
+          "hasDefault": false,
+          "isNullable": true
+        },
+        "phone": {
+          "name": "phone",
+          "type": "text",
+          "primaryKey": false,
+          "hasDefault": false,
+          "isNullable": true
+        },
+        "message": {
+          "name": "message",
+          "type": "text",
+          "primaryKey": false,
+          "hasDefault": false,
+          "isNullable": true
+        },
+        "isAnonymous": {
+          "name": "is_anonymous",
+          "type": "boolean",
+          "primaryKey": false,
+          "hasDefault": true,
+          "isNullable": false
+        },
+        "stripePaymentIntentId": {
+          "name": "stripe_payment_intent_id",
+          "type": "text",
+          "primaryKey": false,
+          "hasDefault": false,
+          "isNullable": false
+        },
+        "stripeCustomerId": {
+          "name": "stripe_customer_id",
+          "type": "text",
+          "primaryKey": false,
+          "hasDefault": false,
+          "isNullable": true
+        },
+        "status": {
+          "name": "status",
+          "type": "text",
+          "primaryKey": false,
+          "hasDefault": true,
+          "isNullable": false
+        },
+        "paymentMethod": {
+          "name": "payment_method",
+          "type": "text",
+          "primaryKey": false,
+          "hasDefault": false,
+          "isNullable": true
+        },
+        "receiptUrl": {
+          "name": "receipt_url",
+          "type": "text",
+          "primaryKey": false,
+          "hasDefault": false,
+          "isNullable": true
+        },
+        "metadata": {
+          "name": "metadata",
+          "type": "jsonb",
+          "primaryKey": false,
+          "hasDefault": true,
+          "isNullable": true
+        },
+        "donorId": {
+          "name": "donor_id",
+          "type": "uuid",
+          "primaryKey": false,
+          "hasDefault": false,
+          "isNullable": true
+        },
+        "createdAt": {
+          "name": "created_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "hasDefault": true,
+          "isNullable": false
+        },
+        "updatedAt": {
+          "name": "updated_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "hasDefault": true,
+          "isNullable": false
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "uniqueConstraints": {}
+    }
+  }
+}

@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WebSocket Debug Tool</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .container {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .status {
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 4px;
+            font-weight: bold;
+        }
+        .success { background-color: #d4edda; color: #155724; }
+        .error { background-color: #f8d7da; color: #721c24; }
+        .info { background-color: #d1ecf1; color: #0c5460; }
+        .warning { background-color: #fff3cd; color: #856404; }
+        button {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            margin: 5px;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        button:disabled {
+            background-color: #6c757d;
+            cursor: not-allowed;
+        }
+        .log {
+            background-color: #f8f9fa;
+            border: 1px solid #dee2e6;
+            border-radius: 4px;
+            padding: 10px;
+            margin: 10px 0;
+            max-height: 300px;
+            overflow-y: auto;
+            font-family: monospace;
+            font-size: 12px;
+        }
+        input, select {
+            padding: 8px;
+            margin: 5px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            width: 200px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>WebSocket Debug Tool</h1>
+        
+        <div id="status" class="status info">Ready to test WebSocket connections</div>
+        
+        <h3>Connection Settings</h3>
+        <div>
+            <label>WebSocket URL:</label>
+            <input type="text" id="wsUrl" value="ws://localhost:8080" />
+        </div>
+        <div>
+            <label>JWT Token:</label>
+            <input type="text" id="jwtToken" placeholder="Enter JWT token" />
+        </div>
+        <div>
+            <label>Session ID:</label>
+            <input type="text" id="sessionId" placeholder="Enter session ID" />
+        </div>
+        <div>
+            <label>User ID:</label>
+            <input type="text" id="userId" placeholder="Enter user ID" />
+        </div>
+        <div>
+            <label>Role:</label>
+            <select id="role">
+                <option value="patient">Patient</option>
+                <option value="practitioner">Practitioner</option>
+            </select>
+        </div>
+        
+        <h3>Actions</h3>
+        <button onclick="testBasicConnection()">Test Basic Connection</button>
+        <button onclick="testAuthenticatedConnection()">Test Authenticated Connection</button>
+        <button onclick="testJoinMessage()">Test Join Message</button>
+        <button onclick="testSessionReady()">Test Session Ready</button>
+        <button onclick="clearLog()">Clear Log</button>
+        
+        <h3>Connection Log</h3>
+        <div id="log" class="log"></div>
+    </div>
+
+    <script>
+        let ws = null;
+        
+        function log(message, type = 'info') {
+            const logDiv = document.getElementById('log');
+            const timestamp = new Date().toLocaleTimeString();
+            const logEntry = document.createElement('div');
+            logEntry.innerHTML = `<span style="color: #666;">[${timestamp}]</span> ${message}`;
+            logDiv.appendChild(logEntry);
+            logDiv.scrollTop = logDiv.scrollHeight;
+            console.log(message);
+        }
+        
+        function updateStatus(message, type = 'info') {
+            const statusDiv = document.getElementById('status');
+            statusDiv.textContent = message;
+            statusDiv.className = `status ${type}`;
+        }
+        
+        function clearLog() {
+            document.getElementById('log').innerHTML = '';
+        }
+        
+        function testBasicConnection() {
+            const wsUrl = document.getElementById('wsUrl').value;
+            log(`Testing basic WebSocket connection to: ${wsUrl}`, 'info');
+            
+            try {
+                ws = new WebSocket(wsUrl);
+                
+                ws.onopen = () => {
+                    log('✅ Basic WebSocket connection successful!', 'success');
+                    updateStatus('Basic connection successful', 'success');
+                };
+                
+                ws.onmessage = (event) => {
+                    log(`📨 Received: ${event.data}`, 'info');
+                };
+                
+                ws.onerror = (error) => {
+                    log(`❌ WebSocket error: ${error}`, 'error');
+                    updateStatus('Connection failed', 'error');
+                };
+                
+                ws.onclose = (event) => {
+                    log(`🔌 WebSocket closed: ${event.code} - ${event.reason}`, 'warning');
+                    updateStatus('Connection closed', 'warning');
+                };
+                
+                // Timeout after 5 seconds
+                setTimeout(() => {
+                    if (ws && ws.readyState === WebSocket.CONNECTING) {
+                        log('⏰ Connection timeout', 'error');
+                        ws.close();
+                        updateStatus('Connection timeout', 'error');
+                    }
+                }, 3000);
+                
+            } catch (error) {
+                log(`❌ Error creating WebSocket: ${error}`, 'error');
+                updateStatus('Error creating connection', 'error');
+            }
+        }
+        
+        function testAuthenticatedConnection() {
+            const wsUrl = document.getElementById('wsUrl').value;
+            const token = document.getElementById('jwtToken').value;
+            const sessionId = document.getElementById('sessionId').value;
+            const userId = document.getElementById('userId').value;
+            const role = document.getElementById('role').value;
+            
+            if (!token || !sessionId || !userId) {
+                log('❌ Please provide JWT token, session ID, and user ID', 'error');
+                updateStatus('Missing required fields', 'error');
+                return;
+            }
+            
+            const authUrl = `${wsUrl}?token=${token}&sessionId=${sessionId}&userId=${userId}&role=${role}&channel=telehealth`;
+            log(`Testing authenticated WebSocket connection to: ${authUrl}`, 'info');
+            
+            try {
+                ws = new WebSocket(authUrl);
+                
+                ws.onopen = () => {
+                    log('✅ Authenticated WebSocket connection successful!', 'success');
+                    updateStatus('Authenticated connection successful', 'success');
+                };
+                
+                ws.onmessage = (event) => {
+                    log(`📨 Received: ${event.data}`, 'info');
+                    try {
+                        const message = JSON.parse(event.data);
+                        if (message.type === 'joined_session') {
+                            log('🎉 Successfully joined telehealth session!', 'success');
+                        } else if (message.type === 'session_ready') {
+                            log('🎯 Session ready message received!', 'success');
+                        }
+                    } catch (e) {
+                        // Not JSON, that's okay
+                    }
+                };
+                
+                ws.onerror = (error) => {
+                    log(`❌ Authenticated WebSocket error: ${error}`, 'error');
+                    updateStatus('Authentication failed', 'error');
+                };
+                
+                ws.onclose = (event) => {
+                    log(`🔌 Authenticated WebSocket closed: ${event.code} - ${event.reason}`, 'warning');
+                    updateStatus('Authenticated connection closed', 'warning');
+                };
+                
+                // Timeout after 10 seconds
+                setTimeout(() => {
+                    if (ws && ws.readyState === WebSocket.CONNECTING) {
+                        log('⏰ Authenticated connection timeout', 'error');
+                        ws.close();
+                        updateStatus('Authentication timeout', 'error');
+                    }
+                }, 10000);
+                
+            } catch (error) {
+                log(`❌ Error creating authenticated WebSocket: ${error}`, 'error');
+                updateStatus('Error creating authenticated connection', 'error');
+            }
+        }
+        
+        function testJoinMessage() {
+            if (!ws || ws.readyState !== WebSocket.OPEN) {
+                log('❌ No active WebSocket connection', 'error');
+                updateStatus('No active connection', 'error');
+                return;
+            }
+            
+            const sessionId = document.getElementById('sessionId').value;
+            const userId = document.getElementById('userId').value;
+            const role = document.getElementById('role').value;
+            
+            const joinMessage = {
+                type: 'join',
+                from: userId,
+                to: 'all',
+                sessionId: sessionId,
+                data: {
+                    role: role,
+                    userId: userId,
+                    timestamp: new Date()
+                }
+            };
+            
+            log(`📤 Sending join message: ${JSON.stringify(joinMessage)}`, 'info');
+            ws.send(JSON.stringify(joinMessage));
+            updateStatus('Join message sent', 'info');
+        }
+        
+        function testSessionReady() {
+            if (!ws || ws.readyState !== WebSocket.OPEN) {
+                log('❌ No active WebSocket connection', 'error');
+                updateStatus('No active connection', 'error');
+                return;
+            }
+            
+            const sessionId = document.getElementById('sessionId').value;
+            const userId = document.getElementById('userId').value;
+            
+            const sessionReadyMessage = {
+                type: 'session_ready',
+                from: userId,
+                to: 'all',
+                sessionId: sessionId,
+                data: {
+                    participants: [userId],
+                    timestamp: new Date()
+                }
+            };
+            
+            log(`📤 Sending session_ready message: ${JSON.stringify(sessionReadyMessage)}`, 'info');
+            ws.send(JSON.stringify(sessionReadyMessage));
+            updateStatus('Session ready message sent', 'info');
+        }
+        
+        // Auto-fill from localStorage if available
+        window.onload = function() {
+            const token = localStorage.getItem('token');
+            if (token) {
+                document.getElementById('jwtToken').value = token;
+                log('✅ JWT token loaded from localStorage', 'success');
+            }
+        };
+    </script>
+</body>
+</html>

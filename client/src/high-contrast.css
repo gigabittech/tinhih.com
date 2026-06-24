@@ -1,0 +1,469 @@
+/* Professional High Contrast System for TiNHiH Portal */
+/* Primary Color: #ffdd00 (HSL: 51 100% 50%) */
+
+/* === HIGH CONTRAST COLOR VARIABLES === */
+.high-contrast {
+  /* Core contrast variables */
+  --contrast-ratio: 21; /* WCAG AAA compliance */
+  --border-width: 2px;
+  --focus-width: 3px;
+  
+  /* Light mode high contrast colors */
+  --background: 0 0% 100%;
+  --foreground: 0 0% 0%;
+  --muted: 0 0% 95%;
+  --muted-foreground: 0 0% 10%;
+  --border: 100%;
+  --primary: 51 100% 50%; /* #ffdd00 */
+  --primary-foreground: 0 0% 0%;
+  --secondary: 0 0% 90%;
+  --secondary-foreground: 0 0% 0%;
+  --accent: 0 0% 85%;
+  --accent-foreground: 0 0% 0%;
+  --card: 0 0% 98%;
+  --card-foreground: 0 0% 0%;
+  --destructive: 0 100% 25%;
+  --destructive-foreground: 0 0% 100%;
+  --warning: 38 100% 25%;
+  --warning-foreground: 0 0% 100%;
+  --success: 120 100% 20%;
+  --success-foreground: 0 0% 100%;
+}
+
+.high-contrast.dark {
+  /* Dark mode high contrast colors */
+  --background: 0 0% 0%;
+  --foreground: 0 0% 100%;
+  --muted: 0 0% 10%;
+  --muted-foreground: 0 0% 90%;
+  --border: 100%;
+  --primary: 51 100% 50%; /* #ffdd00 */
+  --primary-foreground: 0 0% 0%;
+  --secondary: 0 0% 15%;
+  --secondary-foreground: 0 0% 100%;
+  --accent: 0 0% 20%;
+  --accent-foreground: 0 0% 100%;
+  --card: 0 0% 5%;
+  --card-foreground: 0 0% 100%;
+  --destructive: 0 100% 60%;
+  --destructive-foreground: 0 0% 0%;
+  --warning: 38 100% 60%;
+  --warning-foreground: 0 0% 0%;
+  --success: 120 100% 50%;
+  --success-foreground: 0 0% 0%;
+}
+
+/* === BUTTONS === */
+.high-contrast button,
+.high-contrast .button,
+.high-contrast [role="button"] {
+  border: var(--hc-border-width, 2px) solid hsl(var(--foreground)) !important;
+  font-weight: 600 !important;
+  transition: all 0.2s ease !important;
+  outline: none !important;
+}
+
+.high-contrast button[data-variant="default"],
+.high-contrast .button[data-variant="default"] {
+  background-color: var(--hc-primary-hex, #ffdd00) !important;
+  color: hsl(var(--primary-foreground)) !important;
+  border-color: var(--hc-primary-hex, #ffdd00) !important;
+}
+
+.high-contrast button[data-variant="outline"],
+.high-contrast .button[data-variant="outline"] {
+  background-color: hsl(var(--background)) !important;
+  color: hsl(var(--foreground)) !important;
+  border-color: hsl(var(--foreground)) !important;
+}
+
+.high-contrast button[data-variant="secondary"],
+.high-contrast .button[data-variant="secondary"] {
+  background-color: hsl(var(--secondary)) !important;
+  color: hsl(var(--secondary-foreground)) !important;
+  border-color: hsl(var(--secondary-foreground)) !important;
+}
+
+.high-contrast button[data-variant="ghost"],
+.high-contrast .button[data-variant="ghost"] {
+  background-color: hsl(var(--background)) !important;
+  color: hsl(var(--foreground)) !important;
+  border-color: hsl(var(--foreground)) !important;
+}
+
+.high-contrast button[data-variant="destructive"],
+.high-contrast .button[data-variant="destructive"] {
+  background-color: hsl(var(--destructive)) !important;
+  color: hsl(var(--destructive-foreground)) !important;
+  border-color: hsl(var(--destructive)) !important;
+}
+
+.high-contrast button:hover,
+.high-contrast .button:hover,
+.high-contrast [role="button"]:hover {
+  border-width: var(--hc-focus-width, 3px) !important;
+  transform: none !important;
+  box-shadow: 0 0 0 1px var(--hc-primary-hex, #ffdd00) !important;
+}
+
+.high-contrast button:focus,
+.high-contrast .button:focus,
+.high-contrast [role="button"]:focus {
+  outline: var(--hc-focus-width, 3px) solid var(--hc-primary-hex, #ffdd00) !important;
+  outline-offset: 2px !important;
+  border-color: var(--hc-primary-hex, #ffdd00) !important;
+}
+
+.high-contrast button:disabled,
+.high-contrast .button:disabled {
+  opacity: 0.6 !important;
+  background-color: hsl(var(--muted)) !important;
+  color: hsl(var(--muted-foreground)) !important;
+  border-color: hsl(var(--muted-foreground)) !important;
+  cursor: not-allowed !important;
+}
+
+/* === SWITCHES === */
+.high-contrast [role="switch"] {
+  border: var(--border-width) solid hsl(var(--foreground)) !important;
+  outline: none !important;
+}
+
+.high-contrast [role="switch"][data-state="unchecked"] {
+  background-color: hsl(var(--background)) !important;
+  border-color: hsl(var(--foreground)) !important;
+}
+
+.high-contrast [role="switch"][data-state="checked"] {
+  background-color: var(--hc-primary-hex, #ffdd00) !important;
+  border-color: var(--hc-primary-hex, #ffdd00) !important;
+}
+
+.high-contrast [role="switch"] [data-state="unchecked"] {
+  background-color: hsl(var(--foreground)) !important;
+  border: 1px solid hsl(var(--foreground)) !important;
+}
+
+.high-contrast [role="switch"] [data-state="checked"] {
+  background-color: hsl(var(--foreground)) !important;
+  border: 1px solid hsl(var(--foreground)) !important;
+}
+
+.high-contrast [role="switch"]:focus {
+  outline: var(--hc-focus-width, 3px) solid var(--hc-primary-hex, #ffdd00) !important;
+  outline-offset: 2px !important;
+}
+
+.high-contrast [role="switch"]:hover {
+  border-width: var(--hc-focus-width, 3px) !important;
+  border-color: var(--hc-primary-hex, #ffdd00) !important;
+}
+
+/* === FORM ELEMENTS === */
+.high-contrast input,
+.high-contrast textarea,
+.high-contrast select,
+.high-contrast [role="combobox"] {
+  border: var(--border-width) solid hsl(var(--foreground)) !important;
+  background-color: hsl(var(--background)) !important;
+  color: hsl(var(--foreground)) !important;
+  outline: none !important;
+}
+
+.high-contrast input:focus,
+.high-contrast textarea:focus,
+.high-contrast select:focus,
+.high-contrast [role="combobox"]:focus {
+  border-color: var(--hc-primary-hex, #ffdd00) !important;
+  outline: var(--hc-focus-width, 3px) solid var(--hc-primary-hex, #ffdd00) !important;
+  outline-offset: 2px !important;
+  box-shadow: 0 0 0 1px var(--hc-primary-hex, #ffdd00) !important;
+}
+
+.high-contrast input:hover,
+.high-contrast textarea:hover,
+.high-contrast select:hover,
+.high-contrast [role="combobox"]:hover {
+  border-color: var(--hc-primary-hex, #ffdd00) !important;
+}
+
+/* === CARDS AND CONTAINERS === */
+.high-contrast .bg-card,
+.high-contrast .rounded-xl,
+.high-contrast .rounded-lg {
+  background-color: hsl(var(--card)) !important;
+  color: hsl(var(--card-foreground)) !important;
+  border: var(--border-width) solid hsl(var(--border)) !important;
+}
+
+.high-contrast .bg-muted,
+.high-contrast .bg-muted\/30,
+.high-contrast .bg-muted\/40,
+.high-contrast .bg-muted\/50,
+.high-contrast .bg-muted\/60 {
+  background-color: hsl(var(--muted)) !important;
+  color: hsl(var(--muted-foreground)) !important;
+  border: 1px solid hsl(var(--border)) !important;
+}
+
+/* === THEME SELECTION CARDS === */
+.high-contrast .grid.grid-cols-3.gap-3 > div {
+  background-color: hsl(var(--card)) !important;
+  border: var(--border-width) solid hsl(var(--border)) !important;
+  color: hsl(var(--card-foreground)) !important;
+}
+
+.high-contrast .grid.grid-cols-3.gap-3 > div:hover {
+  border-color: var(--hc-primary-hex, #ffdd00) !important;
+  border-width: var(--hc-focus-width, 3px) !important;
+  background-color: hsl(var(--muted)) !important;
+}
+
+/* Selected theme card with #ffdd00 */
+.high-contrast .border-\[#ffdd00\],
+.high-contrast .ring-2 {
+  border: var(--hc-focus-width, 3px) solid var(--hc-primary-hex, #ffdd00) !important;
+  background-color: hsl(var(--card)) !important;
+  box-shadow: 0 0 0 1px var(--hc-primary-hex, #ffdd00) !important;
+}
+
+/* Theme preview squares */
+.high-contrast .grid.grid-cols-3.gap-1 > div,
+.high-contrast .h-8 > div {
+  border: 1px solid hsl(var(--foreground)) !important;
+  background-color: hsl(var(--background)) !important;
+}
+
+/* === BADGES AND INDICATORS === */
+.high-contrast .bg-primary\/10,
+.high-contrast .bg-yellow-400,
+.high-contrast .text-yellow-600,
+.high-contrast .text-yellow-500 {
+  background-color: var(--hc-primary-hex, #ffdd00) !important;
+  color: hsl(var(--primary-foreground)) !important;
+  border: 1px solid var(--hc-primary-hex, #ffdd00) !important;
+}
+
+/* === NAVIGATION === */
+.high-contrast [role="tablist"] {
+  background-color: hsl(var(--muted)) !important;
+  border: var(--border-width) solid hsl(var(--border)) !important;
+}
+
+.high-contrast [role="tab"] {
+  border: 1px solid transparent !important;
+  color: hsl(var(--muted-foreground)) !important;
+  background-color: transparent !important;
+}
+
+.high-contrast [role="tab"][data-state="active"] {
+  background-color: hsl(var(--background)) !important;
+  color: hsl(var(--foreground)) !important;
+  border: var(--border-width) solid hsl(var(--foreground)) !important;
+}
+
+.high-contrast [role="tab"]:hover {
+  border-color: var(--hc-primary-hex, #ffdd00) !important;
+  background-color: hsl(var(--muted)) !important;
+}
+
+/* === DROPDOWNS AND MENUS === */
+.high-contrast [data-radix-popper-content-wrapper],
+.high-contrast [role="menu"],
+.high-contrast [role="listbox"] {
+  background-color: hsl(var(--background)) !important;
+  border: var(--border-width) solid hsl(var(--foreground)) !important;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2) !important;
+}
+
+.high-contrast [role="menuitem"],
+.high-contrast [role="option"] {
+  color: hsl(var(--foreground)) !important;
+  background-color: transparent !important;
+  border: 1px solid transparent !important;
+}
+
+.high-contrast [role="menuitem"]:hover,
+.high-contrast [role="option"]:hover,
+.high-contrast [role="menuitem"][data-highlighted],
+.high-contrast [role="option"][data-highlighted] {
+  background-color: var(--hc-primary-hex, #ffdd00) !important;
+  color: hsl(var(--primary-foreground)) !important;
+  border-color: var(--hc-primary-hex, #ffdd00) !important;
+}
+
+/* === TYPOGRAPHY === */
+.high-contrast h1,
+.high-contrast h2,
+.high-contrast h3,
+.high-contrast h4,
+.high-contrast h5,
+.high-contrast h6 {
+  color: hsl(var(--foreground)) !important;
+  font-weight: 700 !important;
+}
+
+.high-contrast p,
+.high-contrast span,
+.high-contrast label {
+  color: hsl(var(--foreground)) !important;
+}
+
+.high-contrast .text-muted-foreground {
+  color: hsl(var(--muted-foreground)) !important;
+  font-weight: 500 !important;
+}
+
+/* === SEPARATORS === */
+.high-contrast hr,
+.high-contrast [role="separator"] {
+  border-color: hsl(var(--foreground)) !important;
+  opacity: 1 !important;
+  border-width: 1px !important;
+}
+
+/* === FOCUS MANAGEMENT === */
+.high-contrast *:focus-visible {
+  outline: var(--hc-focus-width, 3px) solid var(--hc-primary-hex, #ffdd00) !important;
+  outline-offset: 2px !important;
+}
+
+/* === INTERACTIVE STATES === */
+.high-contrast .cursor-pointer {
+  border: var(--border-width) solid hsl(var(--foreground)) !important;
+  background-color: hsl(var(--background)) !important;
+  transition: all 0.2s ease !important;
+}
+
+.high-contrast .cursor-pointer:hover {
+  background-color: hsl(var(--muted)) !important;
+  border-color: var(--hc-primary-hex, #ffdd00) !important;
+  border-width: var(--hc-focus-width, 3px) !important;
+}
+
+.high-contrast .cursor-pointer:focus {
+  outline: var(--hc-focus-width, 3px) solid var(--hc-primary-hex, #ffdd00) !important;
+  outline-offset: 2px !important;
+}
+
+/* === SCROLLBARS === */
+/* Global scrollbar styling for high contrast */
+.high-contrast * {
+  scrollbar-width: auto;
+  scrollbar-color: hsl(var(--foreground)) hsl(var(--background));
+}
+
+.high-contrast *::-webkit-scrollbar {
+  width: 12px;
+  height: 12px;
+}
+
+.high-contrast *::-webkit-scrollbar-track {
+  background: hsl(var(--background));
+  border: 2px solid hsl(var(--foreground));
+  border-radius: 6px;
+}
+
+.high-contrast *::-webkit-scrollbar-thumb {
+  background: hsl(var(--foreground));
+  border: 2px solid hsl(var(--background));
+  border-radius: 6px;
+  min-height: 40px;
+  min-width: 40px;
+}
+
+.high-contrast *::-webkit-scrollbar-thumb:hover {
+  background: var(--hc-primary-hex, #ffdd00);
+  border-color: hsl(var(--foreground));
+}
+
+.high-contrast *::-webkit-scrollbar-thumb:active {
+  background: var(--hc-primary-hex, #ffdd00);
+  border-color: hsl(var(--foreground));
+}
+
+.high-contrast *::-webkit-scrollbar-corner {
+  background: hsl(var(--background));
+  border: 1px solid hsl(var(--foreground));
+}
+
+/* Specific scrollbar-thin class overrides */
+.high-contrast .scrollbar-thin {
+  scrollbar-width: thin;
+  scrollbar-color: hsl(var(--foreground)) hsl(var(--background));
+}
+
+.high-contrast .scrollbar-thin::-webkit-scrollbar {
+  width: 12px !important;
+}
+
+.high-contrast .scrollbar-thin::-webkit-scrollbar-track {
+  background: hsl(var(--background)) !important;
+  border: 2px solid hsl(var(--foreground)) !important;
+  border-radius: 6px !important;
+}
+
+.high-contrast .scrollbar-thin::-webkit-scrollbar-thumb {
+  background: hsl(var(--foreground)) !important;
+  border: 2px solid hsl(var(--background)) !important;
+  border-radius: 6px !important;
+  min-height: 40px !important;
+}
+
+.high-contrast .scrollbar-thin::-webkit-scrollbar-thumb:hover {
+  background: var(--hc-primary-hex, #ffdd00) !important;
+  border-color: hsl(var(--foreground)) !important;
+}
+
+.high-contrast .scrollbar-thin::-webkit-scrollbar-thumb:active {
+  background: var(--hc-primary-hex, #ffdd00) !important;
+  border-color: hsl(var(--foreground)) !important;
+}
+
+.high-contrast .scrollbar-thin::-webkit-scrollbar-corner {
+  background: hsl(var(--background)) !important;
+  border: 1px solid hsl(var(--foreground)) !important;
+}
+
+/* === UTILITY OVERRIDES === */
+.high-contrast .bg-transparent {
+  background-color: transparent !important;
+}
+
+.high-contrast .hover\:scale-105:hover {
+  transform: none !important;
+}
+
+/* === ICONS === */
+.high-contrast svg {
+  color: hsl(var(--foreground)) !important;
+}
+
+.high-contrast .text-primary svg {
+  color: var(--hc-primary-hex, #ffdd00) !important;
+}
+
+/* === SPECIFIC COMPONENT FIXES === */
+/* Switch text labels */
+.high-contrast .flex.items-center.justify-between label {
+  color: hsl(var(--foreground)) !important;
+  font-weight: 600 !important;
+}
+
+.high-contrast .flex.items-center.justify-between .text-sm {
+  color: hsl(var(--muted-foreground)) !important;
+  font-weight: 500 !important;
+}
+
+/* Ensure proper contrast for all states */
+.high-contrast .opacity-50 {
+  opacity: 0.7 !important;
+}
+
+.high-contrast .opacity-60 {
+  opacity: 0.8 !important;
+}
+
+.high-contrast .opacity-70 {
+  opacity: 0.9 !important;
+}
