@@ -142,12 +142,6 @@ server/tinhih-auth-2025-08-12-747d9f66a146.json
 
 .cursor/
 
-Dockerfile
-Dockerfile.dev
-docker-compose.yml  
-docker-compose.dev.yml
-docker-compose.override.yml
-nginx.conf
 
 .replit 
 *.md
